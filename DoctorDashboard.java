@@ -35,11 +35,7 @@ public class DoctorDashboard extends JFrame {
 
                 JLabel title = new JLabel("DOCTOR DASHBOARD", SwingConstants.CENTER);
 
-                title.setFont(
-                                new Font(
-                                                "Arial",
-                                                Font.BOLD,
-                                                22));
+                title.setFont(new Font("Arial", Font.BOLD, 22));
 
                 JLabel welcome = new JLabel("Welcome, " + doctor.name, SwingConstants.CENTER);
 
