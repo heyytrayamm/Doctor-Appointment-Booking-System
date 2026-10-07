@@ -1,21 +1,24 @@
+package model;
+
 public class Administrator extends User {
 
-    public Administrator(int userId, String name,
-                         String email, String password,
-                         String phone) {
+    public static final int ADMIN_ID = 301;
 
-        super(userId, name, email, password, phone);
+    public static final String ADMIN_PASSWORD = "1234";
+
+    public Administrator(int id, String name, String email, String password, String phone) {
+
+        super(id, name, email, password, phone);
     }
 
-    public void manageUser() {
-        System.out.println("Managing users...");
-    }
+    // Administrator login
+    public static boolean login(int id, String password) {
 
-    public void manageDoctor() {
-        System.out.println("Managing doctors...");
-    }
+        if (id == ADMIN_ID && password.equals(ADMIN_PASSWORD)) {
 
-    public void manageAppointment() {
-        System.out.println("Managing appointments...");
+            return true;
+        }
+
+        return false;
     }
 }

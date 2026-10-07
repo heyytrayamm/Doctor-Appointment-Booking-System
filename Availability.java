@@ -1,50 +1,30 @@
+package model;
+
 public class Availability {
 
-    private int slotId;
-    private String date;
-    private String startTime;
-    private String endTime;
-    private boolean available;
+    // Slot ID
+    public int id;
 
-    public Availability(int slotId, String date,
-                        String startTime, String endTime) {
+    // Slot date and time
+    public String date;
+    public String startTime;
+    public String endTime;
 
-        this.slotId = slotId;
+    // true = available
+    // false = booked
+    public boolean available;
+
+    public Availability(int id, String date, String startTime, String endTime) {
+
+        this.id = id;
+
         this.date = date;
+
         this.startTime = startTime;
+
         this.endTime = endTime;
 
-        // Initially the slot is available
+        // New slot is available by default
         this.available = true;
-    }
-
-    public boolean isAvailable() {
-        return available;
-    }
-
-    public void setAvailable(boolean available) {
-        this.available = available;
-    }
-
-    public int getSlotId() {
-        return slotId;
-    }
-
-    public void displaySlot() {
-
-        System.out.println(
-                "Slot ID: " + slotId +
-                " | Date: " + date +
-                " | Time: " + startTime +
-                " - " + endTime
-        );
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public String getStartTime() {
-        return startTime;
     }
 }

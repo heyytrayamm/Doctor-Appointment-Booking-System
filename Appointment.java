@@ -1,47 +1,42 @@
+package model;
+
 public class Appointment {
 
-    private int appointmentId;
+        public int id;
 
-    private Patient patient;
-    private Doctor doctor;
-    private Availability slot;
+        public Patient patient;
+        public Doctor doctor;
+        public Availability slot;
 
-    private String status;
+        public String status;
 
-    public Appointment(int appointmentId,
-                       Patient patient,
-                       Doctor doctor,
-                       Availability slot) {
+        public Appointment(int id, Patient patient, Doctor doctor, Availability slot) {
 
-        this.appointmentId = appointmentId;
-        this.patient = patient;
-        this.doctor = doctor;
-        this.slot = slot;
+                this.id = id;
+                this.patient = patient;
+                this.doctor = doctor;
+                this.slot = slot;
 
-        status = "Booked";
-    }
+                status = "Booked";
+        }
 
-    public int getAppointmentId() {
-        return appointmentId;
-    }
+        // Display appointment
+        public void showAppointment() {
 
-    public Availability getSlot() {
-        return slot;
-    }
+                System.out.println("----------------------------------------------");
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+                System.out.println("Appointment ID : " + id);
 
-    public void displayDetails() {
+                System.out.println("Patient        : " + patient.name);
 
-        System.out.println(
-                "Appointment ID: " + appointmentId +
-                " | Patient: " + patient.getName() +
-                " | Doctor: " + doctor.getName() +
-                " | Date: " + slot.getDate() +
-                " | Time: " + slot.getStartTime() +
-                " | Status: " + status
-        );
-    }
+                System.out.println("Doctor         : " + doctor.name);
+
+                System.out.println("Specialization : " + doctor.specialization);
+
+                System.out.println("Date           : " + slot.date);
+
+                System.out.println("Time           : " + slot.startTime + " - " + slot.endTime);
+
+                System.out.println("Status         : " + status);
+        }
 }

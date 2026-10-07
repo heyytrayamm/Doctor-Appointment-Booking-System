@@ -1,38 +1,97 @@
+package model;
+
 import java.util.ArrayList;
 
 public class Doctor extends User {
 
-    private String specialization;
+    // Store all registered doctors
+    public static ArrayList<Doctor> doctors = new ArrayList<>();
 
-    private ArrayList<Availability> slots;
-    private ArrayList<Appointment> appointments;
+    // ID starts from 201
+    public static int nextDoctorId = 201;
 
-    public Doctor(int userId, String name, String email,
-                  String password, String phone,
-                  String specialization) {
+    public String specialization;
 
-        super(userId, name, email, password, phone);
+    // Doctor's available slots
+    public ArrayList<Availability> slots = new ArrayList<>();
+
+    // Doctor's appointments
+    public ArrayList<Appointment> appointments = new ArrayList<>();
+
+    public Doctor(int id, String name, String email, String password, String phone, String specialization) {
+
+        super(id, name, email, password, phone);
 
         this.specialization = specialization;
-
-        slots = new ArrayList<>();
-        appointments = new ArrayList<>();
     }
 
-    // Add a new availability slot
+    // Add doctor to the doctor list
+    public static void addDoctor(Doctor doctor) {
+
+        doctors.add(doctor);
+    }
+
+    // Doctor login
+    public static Doctor login(int id, String password) {
+
+        for (Doctor doctor : doctors) {
+
+            if (doctor.id == id && doctor.password.equals(password)) {
+
+                return doctor;
+            }
+        }
+
+        return null;
+    }
+
+    // Add availability slot
     public void addSlot(Availability slot) {
 
         slots.add(slot);
 
-        System.out.println("Slot added successfully.");
+        System.out.println("Slot added successfully!");
     }
 
-    // Find a slot using slot ID
+    // Show available slots
+    public void showSlots() {
+
+        if (slots.size() == 0) {
+
+            System.out.println(
+                    "No slots available.");
+
+            return;
+        }
+
+        System.out.println("\n========== AVAILABLE SLOTS ==========");
+
+        boolean found = false;
+
+        for (Availability slot : slots) {
+
+            if (slot.available) {
+
+                System.out.println("Slot ID: " + slot.id + " | Date: " + slot.date + " | Time: " + slot.startTime
+                        + " - " + slot.endTime);
+
+                found = true;
+            }
+        }
+
+        if (found == false) {
+
+            System.out.println("No available slots.");
+        }
+    }
+
+    // Find slot using slot ID
     public Availability findSlot(int slotId) {
 
         for (Availability slot : slots) {
 
-            if (slot.getSlotId() == slotId) {
+            if (slot.id == slotId) {
+
                 return slot;
             }
         }
@@ -40,78 +99,21 @@ public class Doctor extends User {
         return null;
     }
 
-    // Remove an availability slot
-    public void removeSlot(int slotId) {
-
-        Availability slot = findSlot(slotId);
-
-        if (slot != null) {
-
-            slots.remove(slot);
-
-            System.out.println("Slot removed successfully.");
-
-        } else {
-
-            System.out.println("Slot not found.");
-        }
-    }
-
-    // Display all available slots
-    public void showAvailableSlots() {
-
-        boolean found = false;
-
-        System.out.println("\nAvailable Slots:");
-
-        for (Availability slot : slots) {
-
-            if (slot.isAvailable()) {
-
-                slot.displaySlot();
-
-                found = true;
-            }
-        }
-
-        if (!found) {
-            System.out.println("No available slots.");
-        }
-    }
-
-    // Add a booked appointment
-    public void addAppointment(Appointment appointment) {
-
-        appointments.add(appointment);
-    }
-
-    // Display doctor's appointments
+    // View doctor's appointments
     public void viewAppointments() {
 
-        System.out.println("\nDoctor Appointments:");
+        if (appointments.size() == 0) {
 
-        if (appointments.isEmpty()) {
-
-            System.out.println("No appointments found.");
+            System.out.println("\nNo appointments found.");
 
             return;
         }
 
+        System.out.println("\n========== DOCTOR APPOINTMENTS ==========");
+
         for (Appointment appointment : appointments) {
 
-            appointment.displayDetails();
+            appointment.showAppointment();
         }
-    }
-
-    // Get doctor specialization
-    public String getSpecialization() {
-
-        return specialization;
-    }
-
-    // Update specialization
-    public void setSpecialization(String specialization) {
-
-        this.specialization = specialization;
     }
 }

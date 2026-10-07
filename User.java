@@ -1,32 +1,26 @@
-public class User {
-    protected int userId;
-    protected String name;
-    protected String email;
-    protected String password;
-    protected String phone;
+package model;
 
-    public User(int userId, String name, String email,
-                String password, String phone) {
-        this.userId = userId;
+public class User {
+
+    public int id;
+    public String name;
+    public String email;
+    public String password;
+    public String phone;
+
+    
+    public User(int id, String name, String email, String password, String phone) {
+
+        this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
         this.phone = phone;
     }
 
+    // Login
     public void login() {
+
         System.out.println(name + " logged in.");
-    }
-
-    public void logout() {
-        System.out.println(name + " logged out.");
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getUserId() {
-        return userId;
     }
 }

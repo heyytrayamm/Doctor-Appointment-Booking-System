@@ -1,69 +1,106 @@
+package model;
+
 import java.util.ArrayList;
 
 public class Patient extends User {
 
-    private ArrayList<Appointment> appointments;
+        // Store all registered patients
+        public static ArrayList<Patient> patients = new ArrayList<>();
 
-    public Patient(int userId, String name, String email,
-                   String password, String phone) {
+        public static int nextPatientId = 101;
 
-        super(userId, name, email, password, phone);
-        appointments = new ArrayList<>();
-    }
+        // Store patient's appointments
+        public ArrayList<Appointment> appointments = new ArrayList<>();
 
-    public void bookAppointment(Doctor doctor, Availability slot) {
+        public Patient(int id, String name, String email, String password, String phone) {
 
-        if (!slot.isAvailable()) {
-            System.out.println("Slot is already booked.");
-            return;
+                super(id, name, email, password, phone);
         }
 
-        Appointment appointment =
-                new Appointment(
-                        appointments.size() + 1,
-                        this,
-                        doctor,
-                        slot
-                );
+        public static void addPatient(Patient patient) {
 
-        slot.setAvailable(false);
-        appointments.add(appointment);
-
-        doctor.addAppointment(appointment);
-
-        System.out.println("Appointment booked successfully.");
-    }
-
-    public void viewAppointments() {
-
-        if (appointments.isEmpty()) {
-            System.out.println("No appointments found.");
-            return;
+                patients.add(patient);
         }
 
-        System.out.println("\nPatient Appointments:");
+        public static Patient login(int id, String password) {
 
-        for (Appointment appointment : appointments) {
-            appointment.displayDetails();
-        }
-    }
+                for (Patient patient : patients) {
 
-    public void cancelAppointment(int appointmentId) {
+                        if (patient.id == id && patient.password.equals(password)) {
 
-        for (Appointment appointment : appointments) {
+                                return patient;
+                        }
+                }
 
-            if (appointment.getAppointmentId() == appointmentId) {
-
-                appointment.setStatus("Cancelled");
-
-                appointment.getSlot().setAvailable(true);
-
-                System.out.println("Appointment cancelled.");
-
-                return;
-            }
+                return null;
         }
 
-        System.out.println("Appointment not found.");
-    }
+        public void bookAppointment(
+                        Doctor doctor,
+                        Availability slot) {
+
+                // Check whether slot is available
+                if (slot.available == false) {
+
+                        System.out.println("Slot is already booked.");
+
+                        return;
+                }
+
+                // Create appointment
+                Appointment appointment = new Appointment(appointments.size() + 1, this, doctor, slot);
+
+                // Add appointment to patient
+                appointments.add(appointment);
+
+                // Add appointment to doctor
+                doctor.appointments.add(appointment);
+
+                // Make slot unavailable
+                slot.available = false;
+
+                System.out.println("Appointment booked successfully!");
+        }
+
+        // VIEW APPOINTMENTS
+
+        public void viewAppointments() {
+
+                if (appointments.size() == 0) {
+
+                        System.out.println("No appointments found.");
+
+                        return;
+                }
+
+                System.out.println("\n========== MY APPOINTMENTS ==========");
+
+                for (Appointment appointment : appointments) {
+
+                        appointment.showAppointment();
+                }
+        }
+
+        // CANCEL APPOINTMENT
+
+        public void cancelAppointment(int appointmentId) {
+
+                for (Appointment appointment : appointments) {
+
+                        if (appointment.id == appointmentId && appointment.status.equals("Booked")) {
+
+                                // Change status
+                                appointment.status = "Cancelled";
+
+                                // Make slot available again
+                                appointment.slot.available = true;
+
+                                System.out.println("Appointment cancelled successfully.");
+
+                                return;
+                        }
+                }
+
+                System.out.println("Appointment not found.");
+        }
 }
