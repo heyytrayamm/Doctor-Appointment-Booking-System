@@ -7,7 +7,7 @@ public class LoginFrame extends JFrame {
 
         public LoginFrame() {
 
-                setTitle("DocNest - Doctor Appointment Booking System");
+                setTitle("DocNest - Connect with the Right Doctor");
 
                 setSize(500, 400);
 
