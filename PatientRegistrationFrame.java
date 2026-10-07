@@ -29,9 +29,7 @@ public class PatientRegistrationFrame extends JFrame {
 
                 // TITLE
 
-                JLabel title = new JLabel(
-                                "PATIENT REGISTRATION",
-                                SwingConstants.CENTER);
+                JLabel title = new JLabel("PATIENT REGISTRATION", SwingConstants.CENTER);
 
                 title.setFont(new Font("Arial", Font.BOLD, 20));
 
@@ -102,6 +100,7 @@ public class PatientRegistrationFrame extends JFrame {
                 setVisible(true);
         }
 
+        
         // REGISTER PATIENT
 
         public void registerPatient() {
@@ -111,8 +110,7 @@ public class PatientRegistrationFrame extends JFrame {
 
                 String email = emailField.getText().trim();
 
-                String password = new String(
-                                passwordField.getPassword());
+                String password = new String(passwordField.getPassword());
 
                 String phone = phoneField.getText().trim();
 
@@ -120,11 +118,7 @@ public class PatientRegistrationFrame extends JFrame {
 
                 if (name.isEmpty() || email.isEmpty() || password.isEmpty() || phone.isEmpty()) {
 
-                        JOptionPane.showMessageDialog(
-                                        this,
-                                        "Please fill all fields.",
-                                        "Registration Error",
-                                        JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "Please fill all fields.", "Registration Error", JOptionPane.ERROR_MESSAGE);
 
                         return;
                 }
@@ -135,11 +129,7 @@ public class PatientRegistrationFrame extends JFrame {
 
                         if (patient.email.equalsIgnoreCase(email)) {
 
-                                JOptionPane.showMessageDialog(
-                                                this,
-                                                "Email is already registered.",
-                                                "Registration Error",
-                                                JOptionPane.ERROR_MESSAGE);
+                                JOptionPane.showMessageDialog(this, "Email is already registered.", "Registration Error", JOptionPane.ERROR_MESSAGE);
 
                                 return;
                         }
@@ -160,11 +150,7 @@ public class PatientRegistrationFrame extends JFrame {
 
                 // SUCCESS MESSAGE
 
-                JOptionPane.showMessageDialog(
-                                this,
-                                "Registration Successful!\n\n" + "Patient ID: " + patientId + "\n" + "Name: " + name
-                                                + "\n\n" + "Please remember your Patient ID " + "and password.",
-                                "Registration Successful", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Registration Successful!\n\n" + "Patient ID: " + patientId + "\n" + "Name: " + name + "\n\n" + "Please remember your Patient ID " + "and password.", "Registration Successful", JOptionPane.INFORMATION_MESSAGE);
 
                 // CLEAR FIELDS
 
