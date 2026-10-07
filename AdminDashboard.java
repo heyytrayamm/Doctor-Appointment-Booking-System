@@ -126,11 +126,7 @@ public class AdminDashboard extends JFrame {
 
                 scrollPane.setPreferredSize(new Dimension(600, 300));
 
-                JOptionPane.showMessageDialog(
-                                this,
-                                scrollPane,
-                                "Manage Users",
-                                JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, scrollPane,"Manage Users", JOptionPane.INFORMATION_MESSAGE);
         }
 
         // MANAGE DOCTORS - JTable
