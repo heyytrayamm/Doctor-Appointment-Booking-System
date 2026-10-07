@@ -7,7 +7,6 @@ public class Doctor extends User {
     // Store all registered doctors
     public static ArrayList<Doctor> doctors = new ArrayList<>();
 
-    // ID starts from 201
     public static int nextDoctorId = 201;
 
     public String specialization;
@@ -72,8 +71,7 @@ public class Doctor extends User {
 
             if (slot.available) {
 
-                System.out.println("Slot ID: " + slot.id + " | Date: " + slot.date + " | Time: " + slot.startTime
-                        + " - " + slot.endTime);
+                System.out.println("Slot ID: " + slot.id + " | Date: " + slot.date + " | Time: " + slot.startTime + " - " + slot.endTime);
 
                 found = true;
             }
