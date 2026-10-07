@@ -141,8 +141,7 @@ public class DoctorDashboard extends JFrame {
 
                 panel.add(endTimeField);
 
-                int result = JOptionPane.showConfirmDialog(this, panel, "Add Availability",
-                                JOptionPane.OK_CANCEL_OPTION);
+                int result = JOptionPane.showConfirmDialog(this, panel, "Add Availability", JOptionPane.OK_CANCEL_OPTION);
 
                 if (result != JOptionPane.OK_OPTION) {
 
