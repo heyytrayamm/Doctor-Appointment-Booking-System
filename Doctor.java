@@ -4,38 +4,54 @@ import java.util.ArrayList;
 
 public class Doctor extends User {
 
-    // Store all registered doctors
     public static ArrayList<Doctor> doctors = new ArrayList<>();
 
     public static int nextDoctorId = 201;
 
     public String specialization;
 
-    // Doctor's available slots
+    // Doctor consultation fee
+    public double consultationFee;
+
     public ArrayList<Availability> slots = new ArrayList<>();
 
-    // Doctor's appointments
     public ArrayList<Appointment> appointments = new ArrayList<>();
 
-    public Doctor(int id, String name, String email, String password, String phone, String specialization) {
+    // Constructor
+    public Doctor(int id,
+            String name,
+            String email,
+            String password,
+            String phone,
+            String specialization) {
 
-        super(id, name, email, password, phone);
+        super(
+                id,
+                name,
+                email,
+                password,
+                phone);
 
         this.specialization = specialization;
+
+        // Default fee
+        this.consultationFee = 0;
     }
 
-    // Add doctor to the doctor list
+    // Add doctor
     public static void addDoctor(Doctor doctor) {
 
         doctors.add(doctor);
     }
 
     // Doctor login
-    public static Doctor login(int id, String password) {
+    public static Doctor login(int id,
+            String password) {
 
         for (Doctor doctor : doctors) {
 
-            if (doctor.id == id && doctor.password.equals(password)) {
+            if (doctor.id == id &&
+                    doctor.password.equals(password)) {
 
                 return doctor;
             }
@@ -44,12 +60,17 @@ public class Doctor extends User {
         return null;
     }
 
-    // Add availability slot
+    // Set consultation fee
+    public void setConsultationFee(
+            double consultationFee) {
+
+        this.consultationFee = consultationFee;
+    }
+
+    // Add availability
     public void addSlot(Availability slot) {
 
         slots.add(slot);
-
-        System.out.println("Slot added successfully!");
     }
 
     // Show available slots
@@ -63,27 +84,27 @@ public class Doctor extends User {
             return;
         }
 
-        System.out.println("\n========== AVAILABLE SLOTS ==========");
-
-        boolean found = false;
+        System.out.println(
+                "\n========== AVAILABLE SLOTS ==========");
 
         for (Availability slot : slots) {
 
             if (slot.available) {
 
-                System.out.println("Slot ID: " + slot.id + " | Date: " + slot.date + " | Time: " + slot.startTime + " - " + slot.endTime);
-
-                found = true;
+                System.out.println(
+                        "Slot ID: "
+                                + slot.id
+                                + " | Date: "
+                                + slot.date
+                                + " | Time: "
+                                + slot.startTime
+                                + " - "
+                                + slot.endTime);
             }
-        }
-
-        if (found == false) {
-
-            System.out.println("No available slots.");
         }
     }
 
-    // Find slot using slot ID
+    // Find slot
     public Availability findSlot(int slotId) {
 
         for (Availability slot : slots) {
@@ -97,17 +118,16 @@ public class Doctor extends User {
         return null;
     }
 
-    // View doctor's appointments
+    // View appointments
     public void viewAppointments() {
 
         if (appointments.size() == 0) {
 
-            System.out.println("\nNo appointments found.");
+            System.out.println(
+                    "\nNo appointments found.");
 
             return;
         }
-
-        System.out.println("\n========== DOCTOR APPOINTMENTS ==========");
 
         for (Appointment appointment : appointments) {
 
