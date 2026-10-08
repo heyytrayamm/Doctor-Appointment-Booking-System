@@ -107,8 +107,7 @@ public class DoctorRegistrationFrame extends JFrame {
 
                 String specialization = specializationField.getText();
 
-                if (name.isEmpty() || email.isEmpty() || password.isEmpty() || phone.isEmpty()
-                                || specialization.isEmpty()) {
+                if (name.isEmpty() || email.isEmpty() || password.isEmpty() || phone.isEmpty() || specialization.isEmpty()) {
 
                         JOptionPane.showMessageDialog(this, "Please fill all fields.");
 
