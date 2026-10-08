@@ -12,84 +12,164 @@ public class DoctorDashboard extends JFrame {
         Doctor doctor;
 
         JButton manageProfileButton;
+        JButton setFeeButton;
         JButton addAvailabilityButton;
         JButton viewSlotsButton;
         JButton viewAppointmentsButton;
         JButton logoutButton;
 
+        // ==========================================
+        // CONSTRUCTOR
+        // ==========================================
+
         public DoctorDashboard(Doctor doctor) {
 
                 this.doctor = doctor;
 
-                setTitle("Doctor Dashboard");
+                setTitle("DocNest | Doctor Dashboard");
 
-                setSize(600, 450);
+                setSize(650, 500);
 
-                setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                setDefaultCloseOperation(
+                                JFrame.EXIT_ON_CLOSE);
 
                 setLocationRelativeTo(null);
 
+                // ==========================================
+                // MAIN PANEL
+                // ==========================================
+
                 JPanel panel = new JPanel();
 
-                panel.setLayout(new GridLayout(7, 1, 10, 10));
+                panel.setLayout(
+                                new GridLayout(8, 1, 10, 10));
 
-                JLabel title = new JLabel("DOCTOR DASHBOARD", SwingConstants.CENTER);
+                // ==========================================
+                // TITLE
+                // ==========================================
 
-                title.setFont(new Font("Arial", Font.BOLD, 22));
+                JLabel title = new JLabel(
+                                "DOCTOR DASHBOARD",
+                                SwingConstants.CENTER);
 
-                JLabel welcome = new JLabel("Welcome, " + doctor.name, SwingConstants.CENTER);
+                title.setFont(
+                                new Font(
+                                                "Segoe UI",
+                                                Font.BOLD,
+                                                24));
 
-                welcome.setFont(new Font("Arial", Font.PLAIN, 16));
+                // ==========================================
+                // WELCOME MESSAGE
+                // ==========================================
 
-                manageProfileButton = new JButton("Manage Profile");
+                JLabel welcome = new JLabel(
+                                "Welcome, Dr. " + doctor.name,
+                                SwingConstants.CENTER);
 
-                addAvailabilityButton = new JButton("Add Availability");
+                welcome.setFont(
+                                new Font(
+                                                "Segoe UI",
+                                                Font.PLAIN,
+                                                18));
 
-                viewSlotsButton = new JButton("View Available Slots");
+                // ==========================================
+                // BUTTONS
+                // ==========================================
 
-                viewAppointmentsButton = new JButton("View Appointments");
+                manageProfileButton = new JButton(
+                                "Manage Profile");
 
-                logoutButton = new JButton("Logout");
+                setFeeButton = new JButton(
+                                "Set Consultation Fee");
+
+                addAvailabilityButton = new JButton(
+                                "Add Availability");
+
+                viewSlotsButton = new JButton(
+                                "View Available Slots");
+
+                viewAppointmentsButton = new JButton(
+                                "View Appointments");
+
+                logoutButton = new JButton(
+                                "Logout");
+
+                // ==========================================
+                // ADD COMPONENTS
+                // ==========================================
 
                 panel.add(title);
+
                 panel.add(welcome);
+
                 panel.add(manageProfileButton);
+
+                panel.add(setFeeButton);
+
                 panel.add(addAvailabilityButton);
+
                 panel.add(viewSlotsButton);
+
                 panel.add(viewAppointmentsButton);
+
                 panel.add(logoutButton);
 
                 add(panel);
 
-                // Manage Profile
+                // ==========================================
+                // MANAGE PROFILE
+                // ==========================================
+
                 manageProfileButton.addActionListener(e -> {
 
                         manageProfile();
 
                 });
 
-                // Add Availability
+                // ==========================================
+                // SET CONSULTATION FEE
+                // ==========================================
+
+                setFeeButton.addActionListener(e -> {
+
+                        setFee();
+
+                });
+
+                // ==========================================
+                // ADD AVAILABILITY
+                // ==========================================
+
                 addAvailabilityButton.addActionListener(e -> {
 
                         addAvailability();
 
                 });
 
-                // View Slots
+                // ==========================================
+                // VIEW AVAILABLE SLOTS
+                // ==========================================
+
                 viewSlotsButton.addActionListener(e -> {
 
                         viewSlots();
 
                 });
 
-                // View Appointments
+                // ==========================================
+                // VIEW APPOINTMENTS
+                // ==========================================
+
                 viewAppointmentsButton.addActionListener(e -> {
 
                         viewAppointments();
 
                 });
 
-                // Logout
+                // ==========================================
+                // LOGOUT
+                // ==========================================
+
                 logoutButton.addActionListener(e -> {
 
                         new LoginFrame();
@@ -101,22 +181,105 @@ public class DoctorDashboard extends JFrame {
                 setVisible(true);
         }
 
+        // ==========================================
         // MANAGE PROFILE
+        // ==========================================
 
         public void manageProfile() {
 
-                JOptionPane.showMessageDialog(this,
-                                "Doctor ID: " + doctor.id
-                                                + "\nName: " + doctor.name
-                                                + "\nEmail: " + doctor.email
-                                                + "\nPhone: " + doctor.phone
+                JOptionPane.showMessageDialog(
+                                this,
+
+                                "Doctor ID: "
+                                                + doctor.id
+
+                                                + "\nName: "
+                                                + doctor.name
+
+                                                + "\nEmail: "
+                                                + doctor.email
+
+                                                + "\nPhone: "
+                                                + doctor.phone
+
                                                 + "\nSpecialization: "
-                                                + doctor.specialization,
+                                                + doctor.specialization
+
+                                                + "\nConsultation Fee: ₹"
+                                                + String.format(
+                                                                "%.2f",
+                                                                doctor.consultationFee),
+
                                 "Doctor Profile",
+
                                 JOptionPane.INFORMATION_MESSAGE);
         }
 
+        // ==========================================
+        // SET CONSULTATION FEE
+        // ==========================================
+
+        public void setFee() {
+
+                String feeText = JOptionPane.showInputDialog(
+                                this,
+                                "Enter consultation fee (₹):");
+
+                if (feeText == null) {
+
+                        return;
+                }
+
+                if (feeText.trim().isEmpty()) {
+
+                        JOptionPane.showMessageDialog(
+                                        this,
+                                        "Please enter the consultation fee.");
+
+                        return;
+                }
+
+                double fee;
+
+                try {
+
+                        fee = Double.parseDouble(
+                                        feeText);
+
+                } catch (NumberFormatException e) {
+
+                        JOptionPane.showMessageDialog(
+                                        this,
+                                        "Fee must be a valid number.");
+
+                        return;
+                }
+
+                if (fee < 0) {
+
+                        JOptionPane.showMessageDialog(
+                                        this,
+                                        "Fee cannot be negative.");
+
+                        return;
+                }
+
+                doctor.setConsultationFee(
+                                fee);
+
+                JOptionPane.showMessageDialog(
+                                this,
+
+                                "Consultation fee updated successfully!\n\n"
+                                                + "Fee: ₹"
+                                                + String.format(
+                                                                "%.2f",
+                                                                fee));
+        }
+
+        // ==========================================
         // ADD AVAILABILITY
+        // ==========================================
 
         public void addAvailability() {
 
@@ -127,41 +290,66 @@ public class DoctorDashboard extends JFrame {
                 JTextField endTimeField = new JTextField();
 
                 JPanel panel = new JPanel(
-                                new GridLayout(3, 2, 10, 10));
+                                new GridLayout(
+                                                3,
+                                                2,
+                                                10,
+                                                10));
 
-                panel.add(new JLabel("Date:"));
+                panel.add(
+                                new JLabel("Date:"));
 
-                panel.add(dateField);
+                panel.add(
+                                dateField);
 
-                panel.add(new JLabel("Start Time:"));
+                panel.add(
+                                new JLabel("Start Time:"));
 
-                panel.add(startTimeField);
+                panel.add(
+                                startTimeField);
 
-                panel.add(new JLabel("End Time:"));
+                panel.add(
+                                new JLabel("End Time:"));
 
-                panel.add(endTimeField);
+                panel.add(
+                                endTimeField);
 
-                int result = JOptionPane.showConfirmDialog(this, panel, "Add Availability", JOptionPane.OK_CANCEL_OPTION);
+                int result = JOptionPane.showConfirmDialog(
+                                this,
+                                panel,
+                                "Add Availability",
+                                JOptionPane.OK_CANCEL_OPTION);
 
                 if (result != JOptionPane.OK_OPTION) {
 
                         return;
                 }
 
-                String date = dateField.getText().trim();
+                String date = dateField
+                                .getText()
+                                .trim();
 
-                String startTime = startTimeField.getText().trim();
+                String startTime = startTimeField
+                                .getText()
+                                .trim();
 
-                String endTime = endTimeField.getText().trim();
+                String endTime = endTimeField
+                                .getText()
+                                .trim();
 
-                if (date.isEmpty() || startTime.isEmpty() || endTime.isEmpty()) {
+                if (date.isEmpty() ||
+                                startTime.isEmpty() ||
+                                endTime.isEmpty()) {
 
-                        JOptionPane.showMessageDialog(this, "Please fill all fields.");
+                        JOptionPane.showMessageDialog(
+                                        this,
+                                        "Please fill all fields.");
 
                         return;
                 }
 
-                int slotId = doctor.slots.size() + 1;
+                // Generate 4-digit slot ID
+                int slotId = Availability.nextSlotId;
 
                 Availability slot = new Availability(
                                 slotId,
@@ -169,24 +357,44 @@ public class DoctorDashboard extends JFrame {
                                 startTime,
                                 endTime);
 
-                doctor.addSlot(slot);
+                doctor.addSlot(
+                                slot);
 
-                JOptionPane.showMessageDialog(this, "Slot added successfully!\n\n" + "Slot ID: " + slotId + "\nDate: "
-                                + date + "\nTime: " + startTime + " - " + endTime);
+                Availability.nextSlotId++;
+
+                JOptionPane.showMessageDialog(
+                                this,
+
+                                "Slot added successfully!\n\n"
+                                                + "Slot ID: "
+                                                + slotId
+
+                                                + "\nDate: "
+                                                + date
+
+                                                + "\nTime: "
+                                                + startTime
+                                                + " - "
+                                                + endTime);
         }
 
-        // VIEW AVAILABLE SLOTS - JTable
+        // ==========================================
+        // VIEW AVAILABLE SLOTS
+        // ==========================================
 
         public void viewSlots() {
 
                 if (doctor.slots.size() == 0) {
 
-                        JOptionPane.showMessageDialog(this, "No slots available.");
+                        JOptionPane.showMessageDialog(
+                                        this,
+                                        "No slots available.");
 
                         return;
                 }
 
                 String[] columns = {
+
                                 "Slot ID",
                                 "Date",
                                 "Start Time",
@@ -201,8 +409,11 @@ public class DoctorDashboard extends JFrame {
                 for (Availability slot : doctor.slots) {
 
                         data[row][0] = slot.id;
+
                         data[row][1] = slot.date;
+
                         data[row][2] = slot.startTime;
+
                         data[row][3] = slot.endTime;
 
                         if (slot.available) {
@@ -217,37 +428,47 @@ public class DoctorDashboard extends JFrame {
                         row++;
                 }
 
-                JTable table = new JTable(data, columns);
+                JTable table = new JTable(
+                                data,
+                                columns);
 
                 table.setRowHeight(25);
 
                 table.getTableHeader()
                                 .setReorderingAllowed(false);
 
-                JScrollPane scrollPane = new JScrollPane(table);
+                JScrollPane scrollPane = new JScrollPane(
+                                table);
 
                 scrollPane.setPreferredSize(
-                                new Dimension(600, 300));
+                                new Dimension(
+                                                600,
+                                                300));
 
                 JOptionPane.showMessageDialog(
                                 this,
                                 scrollPane,
-                                "Available Slots",
+                                "My Availability",
                                 JOptionPane.INFORMATION_MESSAGE);
         }
 
-        // VIEW APPOINTMENTS - JTable
+        // ==========================================
+        // VIEW APPOINTMENTS
+        // ==========================================
 
         public void viewAppointments() {
 
                 if (doctor.appointments.size() == 0) {
 
-                        JOptionPane.showMessageDialog(this, "No appointments found.");
+                        JOptionPane.showMessageDialog(
+                                        this,
+                                        "No appointments found.");
 
                         return;
                 }
 
                 String[] columns = {
+
                                 "Appointment ID",
                                 "Patient",
                                 "Date",
@@ -277,20 +498,27 @@ public class DoctorDashboard extends JFrame {
                         row++;
                 }
 
-                JTable table = new JTable(data, columns);
+                JTable table = new JTable(
+                                data,
+                                columns);
 
                 table.setRowHeight(25);
 
-                table.getTableHeader().setReorderingAllowed(false);
+                table.getTableHeader()
+                                .setReorderingAllowed(false);
 
-                JScrollPane scrollPane = new JScrollPane(table);
+                JScrollPane scrollPane = new JScrollPane(
+                                table);
 
-                scrollPane.setPreferredSize(new Dimension(650, 300));
+                scrollPane.setPreferredSize(
+                                new Dimension(
+                                                650,
+                                                300));
 
                 JOptionPane.showMessageDialog(
                                 this,
                                 scrollPane,
-                                "Doctor Appointments",
+                                "My Appointments",
                                 JOptionPane.INFORMATION_MESSAGE);
         }
 }
