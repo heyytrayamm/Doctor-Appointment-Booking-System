@@ -19,60 +19,107 @@ public class PatientDashboard extends JFrame {
         JButton cancelAppointmentButton;
         JButton logoutButton;
 
+        // ==========================================
+        // CONSTRUCTOR
+        // ==========================================
+
         public PatientDashboard(Patient patient) {
 
                 this.patient = patient;
 
-                setTitle("Patient Dashboard");
+                setTitle("DocNest | Patient Dashboard");
 
-                setSize(600, 500);
+                setSize(700, 500);
 
-                setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                setDefaultCloseOperation(
+                                JFrame.EXIT_ON_CLOSE);
 
                 setLocationRelativeTo(null);
 
+                // ==========================================
+                // MAIN PANEL
+                // ==========================================
+
                 JPanel panel = new JPanel();
 
-                panel.setLayout(new GridLayout(8, 1, 10, 10));
+                panel.setLayout(
+                                new GridLayout(8, 1, 10, 10));
 
-                JLabel title = new JLabel("PATIENT DASHBOARD", SwingConstants.CENTER);
+                // ==========================================
+                // TITLE
+                // ==========================================
+
+                JLabel title = new JLabel(
+                                "PATIENT DASHBOARD",
+                                SwingConstants.CENTER);
 
                 title.setFont(
                                 new Font(
-                                                "Arial",
+                                                "Segoe UI",
                                                 Font.BOLD,
-                                                22));
+                                                24));
 
-                JLabel welcome = new JLabel("Welcome, " + patient.name, SwingConstants.CENTER);
+                // ==========================================
+                // WELCOME
+                // ==========================================
+
+                JLabel welcome = new JLabel(
+                                "Welcome, " + patient.name,
+                                SwingConstants.CENTER);
 
                 welcome.setFont(
                                 new Font(
-                                                "Arial",
+                                                "Segoe UI",
                                                 Font.PLAIN,
-                                                16));
+                                                18));
 
-                searchDoctorButton = new JButton("Search Doctor");
+                // ==========================================
+                // BUTTONS
+                // ==========================================
 
-                viewSlotsButton = new JButton("View Available Slots");
+                searchDoctorButton = new JButton(
+                                "Search Doctor");
 
-                bookAppointmentButton = new JButton("Book Appointment");
+                viewSlotsButton = new JButton(
+                                "View Available Slots");
 
-                viewAppointmentsButton = new JButton("View Appointments");
+                bookAppointmentButton = new JButton(
+                                "Book Appointment");
 
-                cancelAppointmentButton = new JButton("Cancel Appointment");
+                viewAppointmentsButton = new JButton(
+                                "View Appointments");
 
-                logoutButton = new JButton("Logout");
+                cancelAppointmentButton = new JButton(
+                                "Cancel Appointment");
+
+                logoutButton = new JButton(
+                                "Logout");
+
+                // ==========================================
+                // ADD COMPONENTS
+                // ==========================================
 
                 panel.add(title);
+
                 panel.add(welcome);
+
                 panel.add(searchDoctorButton);
+
                 panel.add(viewSlotsButton);
+
                 panel.add(bookAppointmentButton);
+
                 panel.add(viewAppointmentsButton);
+
                 panel.add(cancelAppointmentButton);
+
                 panel.add(logoutButton);
 
                 add(panel);
+
+                // ==========================================
+                // SEARCH DOCTOR
+                // ==========================================
 
                 searchDoctorButton.addActionListener(e -> {
 
@@ -80,11 +127,19 @@ public class PatientDashboard extends JFrame {
 
                 });
 
+                // ==========================================
+                // VIEW AVAILABLE SLOTS
+                // ==========================================
+
                 viewSlotsButton.addActionListener(e -> {
 
                         viewAvailableSlots();
 
                 });
+
+                // ==========================================
+                // BOOK APPOINTMENT
+                // ==========================================
 
                 bookAppointmentButton.addActionListener(e -> {
 
@@ -92,17 +147,29 @@ public class PatientDashboard extends JFrame {
 
                 });
 
+                // ==========================================
+                // VIEW APPOINTMENTS
+                // ==========================================
+
                 viewAppointmentsButton.addActionListener(e -> {
 
                         viewAppointments();
 
                 });
 
+                // ==========================================
+                // CANCEL APPOINTMENT
+                // ==========================================
+
                 cancelAppointmentButton.addActionListener(e -> {
 
                         cancelAppointment();
 
                 });
+
+                // ==========================================
+                // LOGOUT
+                // ==========================================
 
                 logoutButton.addActionListener(e -> {
 
@@ -115,51 +182,71 @@ public class PatientDashboard extends JFrame {
                 setVisible(true);
         }
 
-        // SEARCH DOCTOR - JTable
+        // ==========================================
+        // SEARCH DOCTOR
+        // ==========================================
 
         public void searchDoctor() {
 
                 if (Doctor.doctors.size() == 0) {
 
-                        JOptionPane.showMessageDialog(this, "No doctors registered.");
+                        JOptionPane.showMessageDialog(
+                                        this,
+                                        "No doctors registered.");
 
                         return;
                 }
 
                 String[] columns = {
+
                                 "Doctor ID",
                                 "Name",
                                 "Specialization",
+                                "Consultation Fee",
                                 "Email",
                                 "Phone"
                 };
 
-                Object[][] data = new Object[Doctor.doctors.size()][5];
+                Object[][] data = new Object[Doctor.doctors.size()][6];
 
                 int row = 0;
 
                 for (Doctor doctor : Doctor.doctors) {
 
                         data[row][0] = doctor.id;
+
                         data[row][1] = doctor.name;
+
                         data[row][2] = doctor.specialization;
-                        data[row][3] = doctor.email;
-                        data[row][4] = doctor.phone;
+
+                        data[row][3] = "₹"
+                                        + String.format(
+                                                        "%.2f",
+                                                        doctor.consultationFee);
+
+                        data[row][4] = doctor.email;
+
+                        data[row][5] = doctor.phone;
 
                         row++;
                 }
 
-                JTable table = new JTable(data, columns);
-
-                table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+                JTable table = new JTable(
+                                data,
+                                columns);
 
                 table.setRowHeight(25);
 
-                table.getTableHeader().setReorderingAllowed(false);
+                table.getTableHeader()
+                                .setReorderingAllowed(false);
 
-                JScrollPane scrollPane = new JScrollPane(table);
+                JScrollPane scrollPane = new JScrollPane(
+                                table);
 
-                scrollPane.setPreferredSize(new Dimension(600, 250));
+                scrollPane.setPreferredSize(
+                                new Dimension(
+                                                850,
+                                                300));
 
                 JOptionPane.showMessageDialog(
                                 this,
@@ -168,26 +255,20 @@ public class PatientDashboard extends JFrame {
                                 JOptionPane.INFORMATION_MESSAGE);
         }
 
-        // VIEW AVAILABLE SLOTS - JTable
+        // ==========================================
+        // VIEW AVAILABLE SLOTS
+        // ==========================================
 
         public void viewAvailableSlots() {
 
                 if (Doctor.doctors.size() == 0) {
 
-                        JOptionPane.showMessageDialog(this, "No doctors registered.");
+                        JOptionPane.showMessageDialog(
+                                        this,
+                                        "No doctors registered.");
 
                         return;
                 }
-
-                String[] columns = {
-                                "Doctor ID",
-                                "Doctor",
-                                "Specialization",
-                                "Slot ID",
-                                "Date",
-                                "Start Time",
-                                "End Time"
-                };
 
                 int slotCount = 0;
 
@@ -204,12 +285,26 @@ public class PatientDashboard extends JFrame {
 
                 if (slotCount == 0) {
 
-                        JOptionPane.showMessageDialog(this, "No available slots.");
+                        JOptionPane.showMessageDialog(
+                                        this,
+                                        "No available slots.");
 
                         return;
                 }
 
-                Object[][] data = new Object[slotCount][7];
+                String[] columns = {
+
+                                "Doctor ID",
+                                "Doctor",
+                                "Specialization",
+                                "Consultation Fee",
+                                "Slot ID",
+                                "Date",
+                                "Start Time",
+                                "End Time"
+                };
+
+                Object[][] data = new Object[slotCount][8];
 
                 int row = 0;
 
@@ -220,27 +315,45 @@ public class PatientDashboard extends JFrame {
                                 if (slot.available) {
 
                                         data[row][0] = doctor.id;
+
                                         data[row][1] = doctor.name;
+
                                         data[row][2] = doctor.specialization;
-                                        data[row][3] = slot.id;
-                                        data[row][4] = slot.date;
-                                        data[row][5] = slot.startTime;
-                                        data[row][6] = slot.endTime;
+
+                                        data[row][3] = "₹"
+                                                        + String.format(
+                                                                        "%.2f",
+                                                                        doctor.consultationFee);
+
+                                        data[row][4] = slot.id;
+
+                                        data[row][5] = slot.date;
+
+                                        data[row][6] = slot.startTime;
+
+                                        data[row][7] = slot.endTime;
 
                                         row++;
                                 }
                         }
                 }
 
-                JTable table = new JTable(data, columns);
+                JTable table = new JTable(
+                                data,
+                                columns);
 
                 table.setRowHeight(25);
 
-                table.getTableHeader().setReorderingAllowed(false);
+                table.getTableHeader()
+                                .setReorderingAllowed(false);
 
-                JScrollPane scrollPane = new JScrollPane(table);
+                JScrollPane scrollPane = new JScrollPane(
+                                table);
 
-                scrollPane.setPreferredSize(new Dimension(750, 300));
+                scrollPane.setPreferredSize(
+                                new Dimension(
+                                                1000,
+                                                350));
 
                 JOptionPane.showMessageDialog(
                                 this,
@@ -249,7 +362,9 @@ public class PatientDashboard extends JFrame {
                                 JOptionPane.INFORMATION_MESSAGE);
         }
 
+        // ==========================================
         // BOOK APPOINTMENT
+        // ==========================================
 
         public void bookAppointment() {
 
@@ -262,15 +377,20 @@ public class PatientDashboard extends JFrame {
                         return;
                 }
 
+                // ------------------------------------------
+                // ENTER DOCTOR ID
+                // ------------------------------------------
+
                 String doctorText = JOptionPane.showInputDialog(
                                 this,
                                 "Enter Doctor ID:");
 
                 if (doctorText == null) {
+
                         return;
                 }
 
-                if (doctorText.isEmpty()) {
+                if (doctorText.trim().isEmpty()) {
 
                         JOptionPane.showMessageDialog(
                                         this,
@@ -283,7 +403,8 @@ public class PatientDashboard extends JFrame {
 
                 try {
 
-                        doctorId = Integer.parseInt(doctorText);
+                        doctorId = Integer.parseInt(
+                                        doctorText);
 
                 } catch (NumberFormatException e) {
 
@@ -293,6 +414,10 @@ public class PatientDashboard extends JFrame {
 
                         return;
                 }
+
+                // ------------------------------------------
+                // FIND DOCTOR
+                // ------------------------------------------
 
                 Doctor selectedDoctor = null;
 
@@ -315,12 +440,9 @@ public class PatientDashboard extends JFrame {
                         return;
                 }
 
-                String[] columns = {
-                                "Slot ID",
-                                "Date",
-                                "Start Time",
-                                "End Time"
-                };
+                // ------------------------------------------
+                // COUNT AVAILABLE SLOTS
+                // ------------------------------------------
 
                 int slotCount = 0;
 
@@ -341,6 +463,18 @@ public class PatientDashboard extends JFrame {
                         return;
                 }
 
+                // ------------------------------------------
+                // SLOT TABLE
+                // ------------------------------------------
+
+                String[] columns = {
+
+                                "Slot ID",
+                                "Date",
+                                "Start Time",
+                                "End Time"
+                };
+
                 Object[][] data = new Object[slotCount][4];
 
                 int row = 0;
@@ -350,35 +484,53 @@ public class PatientDashboard extends JFrame {
                         if (slot.available) {
 
                                 data[row][0] = slot.id;
+
                                 data[row][1] = slot.date;
+
                                 data[row][2] = slot.startTime;
+
                                 data[row][3] = slot.endTime;
 
                                 row++;
                         }
                 }
 
-                JTable table = new JTable(data, columns);
+                JTable table = new JTable(
+                                data,
+                                columns);
 
-                table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                table.setSelectionMode(
+                                ListSelectionModel.SINGLE_SELECTION);
 
                 table.setRowHeight(25);
 
-                JScrollPane scrollPane = new JScrollPane(table);
+                JScrollPane scrollPane = new JScrollPane(
+                                table);
 
-                scrollPane.setPreferredSize(new Dimension(500, 250));
+                scrollPane.setPreferredSize(
+                                new Dimension(
+                                                550,
+                                                300));
 
                 int result = JOptionPane.showConfirmDialog(
                                 this,
+
                                 scrollPane,
+
                                 "Select Available Slot",
+
                                 JOptionPane.OK_CANCEL_OPTION,
+
                                 JOptionPane.PLAIN_MESSAGE);
 
                 if (result != JOptionPane.OK_OPTION) {
 
                         return;
                 }
+
+                // ------------------------------------------
+                // GET SELECTED ROW
+                // ------------------------------------------
 
                 int selectedRow = table.getSelectedRow();
 
@@ -391,9 +543,16 @@ public class PatientDashboard extends JFrame {
                         return;
                 }
 
-                int slotId = (Integer) table.getValueAt(selectedRow, 0);
+                int slotId = (Integer) table.getValueAt(
+                                selectedRow,
+                                0);
 
-                Availability selectedSlot = selectedDoctor.findSlot(slotId);
+                // ------------------------------------------
+                // FIND SELECTED SLOT
+                // ------------------------------------------
+
+                Availability selectedSlot = selectedDoctor.findSlot(
+                                slotId);
 
                 if (selectedSlot == null) {
 
@@ -413,20 +572,84 @@ public class PatientDashboard extends JFrame {
                         return;
                 }
 
+                // ------------------------------------------
+                // CONFIRM BOOKING
+                // ------------------------------------------
+
+                int confirm = JOptionPane.showConfirmDialog(
+                                this,
+
+                                "Doctor: "
+                                                + selectedDoctor.name
+
+                                                + "\nSpecialization: "
+                                                + selectedDoctor.specialization
+
+                                                + "\nConsultation Fee: ₹"
+                                                + String.format(
+                                                                "%.2f",
+                                                                selectedDoctor.consultationFee)
+
+                                                + "\nDate: "
+                                                + selectedSlot.date
+
+                                                + "\nTime: "
+                                                + selectedSlot.startTime
+                                                + " - "
+                                                + selectedSlot.endTime
+
+                                                + "\n\nConfirm appointment?",
+
+                                "Confirm Appointment",
+
+                                JOptionPane.YES_NO_OPTION);
+
+                if (confirm != JOptionPane.YES_OPTION) {
+
+                        return;
+                }
+
+                // ------------------------------------------
+                // BOOK APPOINTMENT
+                // ------------------------------------------
+
                 patient.bookAppointment(
                                 selectedDoctor,
                                 selectedSlot);
 
-                JOptionPane.showMessageDialog(this,
-                                "Appointment booked successfully!\n\n" + "Doctor: " + selectedDoctor.name
-                                                + "\nSpecialization: " + selectedDoctor.specialization + "\nDate: "
-                                                + selectedSlot.date + "\nTime: " + selectedSlot.startTime + " - "
+                JOptionPane.showMessageDialog(
+                                this,
+
+                                "Appointment booked successfully!\n\n"
+
+                                                + "Appointment ID: "
+                                                + (patient.appointments
+                                                                .get(
+                                                                                patient.appointments.size() - 1).id)
+
+                                                + "\nDoctor: "
+                                                + selectedDoctor.name
+
+                                                + "\nSpecialization: "
+                                                + selectedDoctor.specialization
+
+                                                + "\nConsultation Fee: ₹"
+                                                + String.format(
+                                                                "%.2f",
+                                                                selectedDoctor.consultationFee)
+
+                                                + "\nDate: "
+                                                + selectedSlot.date
+
+                                                + "\nTime: "
+                                                + selectedSlot.startTime
+                                                + " - "
                                                 + selectedSlot.endTime);
         }
 
-        
-        // VIEW APPOINTMENTS - JTable
-        
+        // ==========================================
+        // VIEW APPOINTMENTS
+        // ==========================================
 
         public void viewAppointments() {
 
@@ -440,16 +663,18 @@ public class PatientDashboard extends JFrame {
                 }
 
                 String[] columns = {
+
                                 "Appointment ID",
                                 "Doctor",
                                 "Specialization",
+                                "Consultation Fee",
                                 "Date",
                                 "Start Time",
                                 "End Time",
                                 "Status"
                 };
 
-                Object[][] data = new Object[patient.appointments.size()][7];
+                Object[][] data = new Object[patient.appointments.size()][8];
 
                 int row = 0;
 
@@ -461,26 +686,38 @@ public class PatientDashboard extends JFrame {
 
                         data[row][2] = appointment.doctor.specialization;
 
-                        data[row][3] = appointment.slot.date;
+                        data[row][3] = "₹"
+                                        + String.format(
+                                                        "%.2f",
+                                                        appointment.doctor.consultationFee);
 
-                        data[row][4] = appointment.slot.startTime;
+                        data[row][4] = appointment.slot.date;
 
-                        data[row][5] = appointment.slot.endTime;
+                        data[row][5] = appointment.slot.startTime;
 
-                        data[row][6] = appointment.status;
+                        data[row][6] = appointment.slot.endTime;
+
+                        data[row][7] = appointment.status;
 
                         row++;
                 }
 
-                JTable table = new JTable(data, columns);
+                JTable table = new JTable(
+                                data,
+                                columns);
 
                 table.setRowHeight(25);
 
-                table.getTableHeader().setReorderingAllowed(false);
+                table.getTableHeader()
+                                .setReorderingAllowed(false);
 
-                JScrollPane scrollPane = new JScrollPane(table);
+                JScrollPane scrollPane = new JScrollPane(
+                                table);
 
-                scrollPane.setPreferredSize(new Dimension(750, 300));
+                scrollPane.setPreferredSize(
+                                new Dimension(
+                                                1000,
+                                                350));
 
                 JOptionPane.showMessageDialog(
                                 this,
@@ -489,8 +726,9 @@ public class PatientDashboard extends JFrame {
                                 JOptionPane.INFORMATION_MESSAGE);
         }
 
-        
+        // ==========================================
         // CANCEL APPOINTMENT
+        // ==========================================
 
         public void cancelAppointment() {
 
@@ -504,6 +742,7 @@ public class PatientDashboard extends JFrame {
                 }
 
                 String[] columns = {
+
                                 "Appointment ID",
                                 "Doctor",
                                 "Date",
@@ -532,21 +771,32 @@ public class PatientDashboard extends JFrame {
                         row++;
                 }
 
-                JTable table = new JTable(data, columns);
+                JTable table = new JTable(
+                                data,
+                                columns);
 
-                table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                table.setSelectionMode(
+                                ListSelectionModel.SINGLE_SELECTION);
 
                 table.setRowHeight(25);
 
-                JScrollPane scrollPane = new JScrollPane(table);
+                JScrollPane scrollPane = new JScrollPane(
+                                table);
 
-                scrollPane.setPreferredSize(new Dimension(600, 300));
+                scrollPane.setPreferredSize(
+                                new Dimension(
+                                                650,
+                                                300));
 
                 int result = JOptionPane.showConfirmDialog(
                                 this,
+
                                 scrollPane,
+
                                 "Select Appointment to Cancel",
+
                                 JOptionPane.OK_CANCEL_OPTION,
+
                                 JOptionPane.PLAIN_MESSAGE);
 
                 if (result != JOptionPane.OK_OPTION) {
@@ -569,11 +819,30 @@ public class PatientDashboard extends JFrame {
                                 selectedRow,
                                 0);
 
+                // ------------------------------------------
+                // CONFIRM CANCELLATION
+                // ------------------------------------------
+
+                int confirm = JOptionPane.showConfirmDialog(
+                                this,
+
+                                "Are you sure you want to "
+                                                + "cancel this appointment?",
+
+                                "Cancel Appointment",
+
+                                JOptionPane.YES_NO_OPTION);
+
+                if (confirm != JOptionPane.YES_OPTION) {
+
+                        return;
+                }
+
                 patient.cancelAppointment(
                                 appointmentId);
 
                 JOptionPane.showMessageDialog(
                                 this,
-                                "Appointment cancellation request processed.");
+                                "Appointment cancelled successfully.");
         }
 }
